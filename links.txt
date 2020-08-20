@@ -1,2 +1,3 @@
    manual - http://76h.org/MCS-80/Intel8085.pdf
 wtfisthis - http://www.nj7p.org/Manuals/PDFs/Intel/9800301D.pdf
+opcodes   - http://www.eazynotes.com/notes/microprocessor/notes/opcodes-table-of-intel-8085.pdf
