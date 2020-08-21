@@ -25,6 +25,7 @@ typedef struct _mycpu_ {
     uint8_t cf;
 
     uint8_t * mem;
+    uint8_t isRunning;
 
 } cpu;
 
@@ -33,6 +34,11 @@ void delete_cpu(cpu *);
 void execute(cpu *);
 
 #define ADD_A 0x87
+#define ADD_B 0x80
 #define SUB_A 0x97
+#define SUB_B 0x90
+#define MVI_A 0x3e
+#define MVI_B 0x06
+#define HLT   0x76
 
 #endif

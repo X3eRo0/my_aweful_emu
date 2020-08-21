@@ -27,7 +27,7 @@ void init_cpu(cpu * mycpu){
     mycpu->reg[10] = (void *)&mycpu->pc;
 
     mycpu->mem = (uint8_t *)malloc(sizeof(uint8_t) * MAX_MEM_SIZE);
-    
+    mycpu->isRunning = 1;
     return;
 }
 
@@ -44,18 +44,43 @@ void delete_cpu(cpu * mycpu){
 void execute(cpu * mycpu){
 
     uint8_t opcode = mycpu->mem[mycpu->pc++];
-    uint8_t arg_1  = mycpu->mem[mycpu->pc++];
+    uint8_t arg_1;
 
     // 0x87, 0x50 <-- ADD A
 
     switch(opcode){
         case ADD_A:{
-            mycpu->A += arg_1;
+            mycpu->A += mycpu->A;
+            break;
+        }
+
+        case ADD_B:{
+            mycpu->A += mycpu->B;
             break;
         }
 
         case SUB_A:{
-            mycpu->A -= arg_1;
+            mycpu->A -= mycpu->A;
+            break;
+        }
+    
+        case SUB_B:{
+            mycpu->A -= mycpu->B;
+            break;
+        }
+
+        case MVI_A:{
+            mycpu->A = mycpu->mem[mycpu->pc++];
+            break;
+        }
+
+        case MVI_B:{
+            mycpu->B = mycpu->mem[mycpu->pc++];
+            break;
+        }
+
+        case HLT:{
+            mycpu->isRunning = 0;
             break;
         }
 
