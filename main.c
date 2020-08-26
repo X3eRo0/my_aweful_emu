@@ -11,6 +11,8 @@ int main(){
     fseek(fp, 0, SEEK_SET);
     fread(mycpu->mem, file_size, 1, fp);
     while(mycpu->isRunning){
+        printf("press any key to execute");
+        getc(stdin);
         execute(mycpu);
         printf("A : 0x%x\n", mycpu->A );
         printf("B : 0x%x\n", mycpu->B );

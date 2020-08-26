@@ -1,18 +1,67 @@
+import sys
 import struct
 
 opcodes = {
-    "add a": 0x87,
-    "add b": 0x80,
-    "add c": 0x81,
-    "mvi a": 0x3e,
-    "mvi b": 0x06,
-    "sub a": 0x97,
-    "hlt"  : 0x76,
+    "ADD" : {
+        "A" : 0x87,
+        "B" : 0x80
+    },
+    "SUB" : {
+        "A" : 0x97,
+        "B" : 0x90
+    },
+    "MVI" : {
+        "A" : 0x3e,
+        "B" : 0x06
+    },
+    "LDA" : 0x3A,
+    "STA" : 0x32,
+    "HLT" : 0x76
 }
 
-with open("source.asm", "r") as file:
-    code = file.readlines()
+def parse_asm(filename):
+    input_asm = open(filename).readlines()
+    output    = open("instructions.bin", "wb")
+    
+    for line in input_asm:
+        line = line.strip("\r\n")
+        line = line.strip()
 
-for i in range(len(code)):
-    code[i] = code[i].strip()
+        opcode = line.split()[0]
+        instruction = line.replace(opcode, "")
+        instruction = instruction.replace(' ', '')
+        instruction = instruction   .split(',') # ["MVI", "A, 0x50"]
 
+        if opcode == "MVI":
+
+            arg_1   = instruction[0]
+            imm_v   = int(instruction[1], 16)
+
+            output.write(struct.pack('B', opcodes[opcode][arg_1]))
+            output.write(struct.pack('B', imm_v))
+        
+        if opcode == "ADD":
+            output.write(struct.pack('B', opcodes[opcode][instruction[1]]))
+        if opcode == "SUB":
+            output.write(struct.pack('B', opcodes[opcode][instruction[1]]))
+        if opcode == "HLT":
+            output.write(struct.pack('B', opcodes[opcode]))
+        if opcode == "LDA" or opcode == "STA":
+            output.write(struct.pack('B', opcodes[opcode]))
+            output.write(struct.pack('H', int(instruction[0], 16)))
+    
+    output.close()
+
+
+def main():
+
+    parse_asm(sys.argv[1])
+
+
+if __name__ == "__main__":
+    main()
+
+        
+
+
+        
