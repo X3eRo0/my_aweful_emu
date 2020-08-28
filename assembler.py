@@ -12,7 +12,20 @@ opcodes = {
     },
     "MVI" : {
         "A" : 0x3e,
-        "B" : 0x06
+        "B" : 0x06,
+        "E" : 0x0E,
+        "D" : 0x16,
+        "H" : 0x26
+    },
+    "PUSH" : {
+        "B" : 0xC5,
+        "D" : 0xD5,
+        "H" : 0xE5
+    },
+    "POP" : {
+        "B" : 0xC1,
+        "D" : 0xD1,
+        "H" : 0xE1
     },
     "LDA" : 0x3A,
     "STA" : 0x32,
@@ -49,6 +62,9 @@ def parse_asm(filename):
         if opcode == "LDA" or opcode == "STA":
             output.write(struct.pack('B', opcodes[opcode]))
             output.write(struct.pack('H', int(instruction[0], 16)))
+        if opcode == "PUSH" or opcode == "POP":
+            output.write(struct.pack('B', opcodes[opcode][instruction[0]]))
+
     
     output.close()
 

@@ -24,6 +24,7 @@ int main(){
         printf("sp: 0x%x\n", mycpu->sp);
         printf("pc: 0x%x\n", mycpu->pc);
         puts("=========");
+        print(&mycpu->mem[0x7fff], 10);
     }
     delete_cpu(mycpu);
     return 0;

@@ -16,8 +16,6 @@ typedef struct _mycpu_ {
     uint8_t E;
     uint8_t H;
     uint8_t L;
-
-    void * reg[11];
     
     uint16_t sp;
     uint16_t pc;
@@ -35,15 +33,23 @@ void delete_cpu(cpu *);
 void execute(cpu *);
 void print(char *, int);
 
-#define ADD_A 0x87
-#define ADD_B 0x80
-#define SUB_A 0x97
-#define SUB_B 0x90
-#define MVI_A 0x3E
-#define MVI_B 0x06
-#define MVI_C 0x0E
-#define LDA   0x3A
-#define STA   0x32
-#define HLT   0x76
+#define ADD_A   0x87
+#define ADD_B   0x80
+#define SUB_A   0x97
+#define SUB_B   0x90
+#define MVI_A   0x3E
+#define MVI_B   0x06
+#define MVI_C   0x0E
+#define MVI_D   0x16
+#define MVI_H   0x26
+#define PUSH_B  0xC5
+#define PUSH_D  0xD5
+#define PUSH_H  0xE5
+#define POP_B   0xC1
+#define POP_D   0xD1
+#define POP_H   0xE1
+#define LDA     0x3A
+#define STA     0x32
+#define HLT     0x76
 
 #endif
